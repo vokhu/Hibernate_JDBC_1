@@ -8,7 +8,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
 import javax.security.auth.login.AppConfigurationEntry;
-//import javax.security.auth.login.Configuration;
+
 import java.sql.*;
 import java.util.Properties;
 

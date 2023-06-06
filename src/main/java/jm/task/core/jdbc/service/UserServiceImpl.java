@@ -9,24 +9,21 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao = new UserDaoJDBCImpl();
+
     UserDao userDaoHiber = new UserDaoHibernateImpl();
 
     @Override
     public void createUsersTable() {
-        /*userDao.createUsersTable()*/
         userDaoHiber.createUsersTable();
     }
 
     @Override
     public void dropUsersTable() {
-        /*userDao.dropUsersTable()*/
         userDaoHiber.dropUsersTable();
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        /*userDao.saveUser(name, lastName, age)*/
         userDaoHiber.saveUser(name, lastName, age);
         System.out.printf("User с именем - %s был добавлен в базу данных \n", name);
     }
@@ -34,12 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUserById(long id) {
         userDaoHiber.removeUserById(id);
-        /*userDao.removeUserById(id)*/
     }
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = userDaoHiber.getAllUsers();       /*userDao.getAllUsers()*/
+        List<User> users = userDaoHiber.getAllUsers();
         for (User user : users) {
             System.out.println(user);
         }
@@ -48,7 +44,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void cleanUsersTable() {
-        /*userDao.cleanUsersTable()*/
         userDaoHiber.cleanUsersTable();
     }
 }
