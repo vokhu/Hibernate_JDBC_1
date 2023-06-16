@@ -12,16 +12,14 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    SessionFactory sessionFactory;
+
 
     public UserDaoHibernateImpl() {
 
     }
-
-
     @Override
     public void createUsersTable() {
-        try (Session session = /*Util.getSessionFactory()*/sessionFactory.openSession()) {
+        try (Session session = Util.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
             String sqlCreat = "CREATE TABLE IF NOT EXISTS User (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(255), lastName VARCHAR (255), age INT)";
             Query query = session.createSQLQuery(sqlCreat).addEntity(User.class);
@@ -61,7 +59,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         try (Session session = Util.getSessionFactory().openSession()){
             User user = session.load(User.class, id);
+            Transaction transaction = session.beginTransaction();
             session.delete(user);
+            transaction.commit();
         }
     }
 
@@ -80,6 +80,7 @@ public class UserDaoHibernateImpl implements UserDao {
             String sqlClean = "TRUNCATE User";
             Query query = session.createSQLQuery(sqlClean);
             query.executeUpdate();
+            transaction.commit();
         }
     }
 }

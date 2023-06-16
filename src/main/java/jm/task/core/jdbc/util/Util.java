@@ -21,21 +21,22 @@ public class Util {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
+        if(sessionFactory == null) {
+            try {
+                Properties properties = new Properties();
+                properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
+                properties.put(Environment.URL, URL);
+                properties.put(Environment.USER, USER_NAME);
+                properties.put(Environment.PASS, PASSWORD);
+                properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                properties.put(Environment.SHOW_SQL, "true");
+                properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
+                properties.put(Environment.HBM2DDL_AUTO, "");
 
-        try {
-            Properties properties = new Properties();
-            properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-            properties.put(Environment.URL, URL);
-            properties.put(Environment.USER, USER_NAME);
-            properties.put(Environment.PASS, PASSWORD);
-            properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-            properties.put(Environment.SHOW_SQL, "true");
-            properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-            properties.put(Environment.HBM2DDL_AUTO,"");
-
-            sessionFactory = new Configuration().setProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                sessionFactory = new Configuration().setProperties(properties).addAnnotatedClass(User.class).buildSessionFactory();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
         return sessionFactory;
     }
